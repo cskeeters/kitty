@@ -181,7 +181,14 @@ func RunShell(shell_cmd []string, shell_integration_env_var_val, cwd string) (er
 	if cwd != "" {
 		_ = os.Chdir(cwd)
 	}
-	return unix.Exec(utils.FindExe(exe), shell_cmd, env)
+	runcmd := utils.FindExe(exe)
+	//runcmd = "/opt/homebrew/bin/bash"
+	if runtime.GOOS == "darwin" {
+		if shell_cmd[0] == "-bash" {
+			shell_cmd[0] = "-sh"
+		}
+	}
+	return unix.Exec(runcmd, shell_cmd, env)
 }
 
 func RunCommandRestoringTerminalToSaneStateAfter(cmd []string) {

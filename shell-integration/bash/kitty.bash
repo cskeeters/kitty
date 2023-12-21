@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Running shell integration for bash (local)"
+
 if [[ "$-" != *i* ]] ; then builtin return; fi  # check in interactive mode
 if [[ -z "$KITTY_SHELL_INTEGRATION" ]]; then builtin return; fi
 
